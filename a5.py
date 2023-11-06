@@ -139,6 +139,15 @@ class Board:
             column - index of the column to assign
             assignment - value to place at given row, column coordinate
         """
+        self.rows[row][column] = assignment
+        self.num_nums_placed += 1
+        for i in range(self.size):
+            remove_if_exists(self.rows[row][i], assignment)
+            remove_if_exists(self.rows[i][column], assignment)
+        #print(self.subgrid_coordinates(row, column))
+        for i, j in self.subgrid_coordinates(row, column):
+            #print(i, j)
+            remove_if_exists(self.rows[i][j], assignment)
         pass
 
 
@@ -174,24 +183,32 @@ def BFS(state: Board) -> Board:
 
 if __name__ == "__main__":
     # uncomment the below lines once you've implemented the board class
-   
+   b = Board()
+   print(b)
+   b.print_pretty()
+   b.update(0, 0, 4)
+   b.update(2, 1, 7)
+   b.update(0, 5, 1)
+   b.update(7, 1, 8)
+   b.print_pretty()
+   print(b)
     # # CODE BELOW HERE RUNS YOUR BFS/DFS
-    # print("<<<<<<<<<<<<<< Solving Sudoku >>>>>>>>>>>>>>")
+   print("<<<<<<<<<<<<<< Solving Sudoku >>>>>>>>>>>>>>")
 
-    # def test_dfs_or_bfs(use_dfs: bool, moves: List[Tuple[int, int, int]]) -> None:
-    #     b = Board()
-    #     # make initial moves to set up board
-    #     for move in moves:
-    #         b.update(*move)
+def test_dfs_or_bfs(use_dfs: bool, moves: List[Tuple[int, int, int]]) -> None:
+    b = Board()
+    # make initial moves to set up board
+    for move in moves:
+        b.update(*move)
 
-    #     # print initial board
-    #     print("<<<<< Initial Board >>>>>")
-    #     b.print_pretty()
-    #     # solve board
-    #     solution = (DFS if use_dfs else BFS)(b)
-    #     # print solved board
-    #     print("<<<<< Solved Board >>>>>")
-    #     solution.print_pretty()
+        print initial board
+        print("<<<<< Initial Board >>>>>")
+        b.print_pretty()
+         # solve board
+        solution = (DFS if use_dfs else BFS)(b)
+         # print solved board
+        print("<<<<< Solved Board >>>>>")
+        solution.print_pretty()
 
     # # sets of moves for the different games
     # first_moves = [
@@ -255,10 +272,10 @@ if __name__ == "__main__":
     #     (8, 7, 5),
     # ]
     # #Create a sudoku board.
-    # b = Board()
+    #b = Board()
     # #Place the 28 assignments in first_moves on the board.
-    # for trip in first_moves:
-    #     b.rows[trip[0]][trip[1]] = trip[2]
+    #for trip in first_moves:
+        #b.rows[trip[0]][trip[1]] = trip[2]
     # #NOTE - the above code only *puts* the numbers on the board, but doesn't
     # #   do the work that update does (remove numbers from other lists, etc).
 
