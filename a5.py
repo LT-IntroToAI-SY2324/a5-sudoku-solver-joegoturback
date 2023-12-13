@@ -102,10 +102,13 @@ class Board:
         """Finds the coordinates (row and column indices) of the cell that contains the
         fewest possible values to assign (the shortest list). Note: in the case of ties
         return the coordinates of the first minimum size cell found
-
+        
         Returns:
             a tuple of row, column index identifying the most constrained cell
         """
+        rows = 0
+        cols = 0
+        mini = self.size
         pass
 
     def failure_test(self) -> bool:

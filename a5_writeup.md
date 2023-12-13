@@ -22,7 +22,8 @@ After completing the assignment, answer the following reflection questions:
 ## Reflection Questions
 
 1. How do the performance and efficiency of the Depth-First Search (DFS) and Breadth-First Search (BFS) algorithms compare when solving Sudoku puzzles? In what scenarios might one approach be preferable over the other?
-DFS and BFS may be more useful than the other in certain scenarios on the Sudoku board, for example when the numbers are all crammed onto the top of the board, DFS (which goes up-down) can be more useful because
+
+BFS and DFS may be more preferable over one another depending on how the things being searched across the grid are distributed. For example in Sudoku, DFS would be preferable if the numbers tend to be packed closer to the top of the puzzle (it would be required if one of the ranks of the grid were completely empty), and breadth first search would be more preferable if the numbers were packed closer to the side. (would be required if one of the files were completely empty)
 
 
 2. How did the choice of data structures (like the Stack for DFS and Queue for BFS) impact the implementation and functionality of the algorithms? Are there alternative data structures or design patterns that could have been used to achieve the same objectives?
