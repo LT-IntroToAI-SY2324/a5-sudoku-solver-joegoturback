@@ -109,6 +109,13 @@ class Board:
         rows = 0
         cols = 0
         mini = self.size
+        for i in range(self.size):
+            if isinstance(self.rows[i][j], list) and len(self.rows[i][j]) < mini:
+                mini = len(self.rows[i][j])
+                row = i
+                col = j
+
+        return (row, col)
         pass
 
     def failure_test(self) -> bool:
@@ -119,6 +126,11 @@ class Board:
         Returns:
             True if we have failed to fill out the puzzle, False otherwise
         """
+        for row in self.rows:
+            for col in row:
+                if not col:
+                    return True
+        return False
         pass
 
     def goal_test(self) -> bool:
@@ -128,6 +140,7 @@ class Board:
         Returns:
             True if we've placed all numbers, False otherwise
         """
+        return self.num_nums_placed == self.size * self.size
         pass
 
     def update(self, row: int, column: int, assignment: int) -> None:
@@ -166,6 +179,20 @@ def DFS(state: Board) -> Board:
     Returns:
         either None in the case of invalid input or a solved board
     """
+    the_stack = Stack()
+    the_stack.push(state)
+    while not the_stack.is_empty():
+        curr = the_stack.pop()
+        if curr.goal_test():
+            return curr
+        elif not curr.failure_test():
+            row, col = curr.find_most_constrained_cell()
+            for sel in curr.rows[row][col]:
+                # Create a copy of the board
+                cpy = copy.deepcopy(curr)
+                cpy.update(row, col, sel)
+                the_stack.push(cpy)
+                print(the_stack)
     pass
 
 
@@ -204,7 +231,6 @@ def test_dfs_or_bfs(use_dfs: bool, moves: List[Tuple[int, int, int]]) -> None:
     for move in moves:
         b.update(*move)
 
-        print initial board
         print("<<<<< Initial Board >>>>>")
         b.print_pretty()
          # solve board
