@@ -110,10 +110,11 @@ class Board:
         cols = 0
         mini = self.size
         for i in range(self.size):
-            if isinstance(self.rows[i][j], list) and len(self.rows[i][j]) < mini:
-                mini = len(self.rows[i][j])
-                row = i
-                col = j
+            for j in range(self.size):
+                if isinstance(self.rows[i][j], list) and len(self.rows[i][j]) < mini:
+                    mini = len(self.rows[i][j])
+                    row = i
+                    col = j
 
         return (row, col)
         pass
